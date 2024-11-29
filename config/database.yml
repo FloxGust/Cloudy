@@ -28,5 +28,18 @@ test:
 # Similarly, if you deploy your application as a Docker container, you must
 # ensure the database is located in a persisted volume.
 production:
-  <<: *default
-  # database: path/to/persistent/storage/production.sqlite3
+  primary:
+    <<: *default
+    database: storage/production.sqlite3
+  cache:
+    <<: *default
+    database: storage/production_cache.sqlite3
+    migrations_paths: db/migrate/20241129112435_create_cache_table.rb
+  queue:
+    <<: *default
+    database: storage/production_queue.sqlite3
+    migrations_paths: db/migrate/20241129112528_create_active_storage_tables.active_storage.rb
+  cable:
+    <<: *default
+    database: storage/production_cable.sqlite3
+    migrations_paths: db/migrate/20241129112613_create_cable_tables.rb

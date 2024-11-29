@@ -1,0 +1,14 @@
+version: "3.8"
+services:
+  app:
+    build: .
+    image: floxgustdocker/cloudyvibeboard
+    ports:
+      - "3000:3000" # หรือพอร์ตที่คุณต้องการใช้
+    volumes:
+      - ./storage:/rails/storage # สำหรับการเก็บข้อมูลเช่นฐานข้อมูล
+      - ./tmp:/rails/tmp
+    environment:
+      - RAILS_ENV=production
+      - RAILS_MASTER_KEY=37a29974411a62f6e09ab07abc417476
+    command: bash -c "bin/rails db:create && bin/rails db:migrate && bin/rails assets:precompile && bin/rails server -b '0.0.0.0'"
